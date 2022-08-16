@@ -1,13 +1,10 @@
 import java.io.File;
-import java.util.Arrays;
 import java.util.concurrent.RecursiveTask;
 
 public class SomaByte extends RecursiveTask<Integer> {
     private static long[] vetB = new long[40];
     private final File file;
-    private static long test[] = new long[40];
-    private static final int LIMITE = 500;
-
+    private static final int LIMITE = 50_000;
 
     public SomaByte(File file){
         this.file = file;
@@ -15,12 +12,13 @@ public class SomaByte extends RecursiveTask<Integer> {
 
     @Override
     protected Integer compute() {
-        long restultado = 0;
-        if(file.length() < LIMITE){
-            restultado = getArquivo(file);
-            return (int) restultado;
+        if (file.length() < LIMITE){
+            long restultado = 0;
+            if(file.length() <= LIMITE){
+                restultado = getArquivo(file);
+                return (int) restultado;
+            }
         }
-
         return null;
     }
 
@@ -37,16 +35,8 @@ public class SomaByte extends RecursiveTask<Integer> {
             }
             else
                 lenght += getArquivo(files[i]);
-
             i++;
         }
         return lenght;
-    }
-
-
-    public void imprimir(){
-        for (int r = 0; r < 12; r++){
-            System.out.println("\nVet " + vetB[r]);
-        }
     }
 }
